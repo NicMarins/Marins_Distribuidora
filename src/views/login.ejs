@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<section class="container pagina-autenticacao">
+  <div class="cartao-autenticacao">
+    <h1>Entrar na sua conta</h1>
+    <p class="pagina-autenticacao__subtitulo">Acesse para ver pedidos, favoritos e dados de entrega.</p>
+
+    <% if (typeof mensagemSucesso !== 'undefined' && mensagemSucesso) { %>
+      <p class="mensagem-sucesso"><%= mensagemSucesso %></p>
+    <% } %>
+    <% if (typeof erros !== 'undefined' && erros.length) { %>
+      <ul class="lista-erros">
+        <% erros.forEach(erro => { %>
+          <li><%= erro.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <form action="/api/auth/login" method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="campo-formulario">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+
+      <div class="campo-formulario">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required autocomplete="current-password" minlength="8">
+      </div>
+
+      <a href="/recuperar-senha" class="link-discreto">Esqueci minha senha</a>
+
+      <button type="submit" class="botao botao--primario botao--largura-total">Entrar</button>
+    </form>
+
+    <p class="pagina-autenticacao__rodape">
+      Ainda não tem conta? <a href="/cadastro">Criar conta</a>
+    </p>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

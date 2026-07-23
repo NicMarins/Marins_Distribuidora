@@ -1,0 +1,369 @@
+/* =========================================================
+   PAINEL ADMINISTRATIVO
+   Layout com barra lateral fixa — prioriza densidade de
+   informação e acesso rápido às ações de gestão do catálogo.
+   ========================================================= */
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  background-color: var(--cor-tinta);
+  color: var(--cor-fundo);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin-sidebar .marca {
+  color: var(--cor-fundo);
+  text-decoration: none;
+}
+
+.admin-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin-menu a {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--raio-padrao);
+  text-decoration: none;
+  color: var(--cor-fundo);
+  opacity: 0.8;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.admin-menu a:hover {
+  opacity: 1;
+  background-color: rgba(250, 250, 247, 0.08);
+}
+
+.admin-menu__ativo {
+  opacity: 1 !important;
+  background-color: var(--cor-acento) !important;
+  color: var(--cor-tinta) !important;
+}
+
+.admin-conteudo {
+  background-color: var(--cor-fundo-alt);
+  min-height: 100vh;
+}
+
+.admin-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background-color: #fff;
+  border-bottom: 2px solid var(--cor-tinta);
+}
+
+.admin-topo h1 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.admin-topo__usuario {
+  font-family: var(--fonte-mono);
+  font-size: 0.85rem;
+  color: var(--cor-tinta-suave);
+}
+
+.admin-main {
+  padding: 2rem;
+}
+
+.admin-grade-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.admin-card {
+  background-color: #fff;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.admin-card--alerta {
+  border-color: var(--cor-erro);
+}
+
+.admin-card__rotulo {
+  font-size: 0.8rem;
+  color: var(--cor-tinta-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-card__numero {
+  font-family: var(--fonte-display);
+  font-size: 2rem;
+}
+
+.admin-secao {
+  background-color: #fff;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  padding: 1.5rem;
+}
+
+.admin-secao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.admin-secao__cabecalho h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.admin-tabela-wrapper {
+  overflow-x: auto;
+}
+
+.admin-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-tabela th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cor-tinta-suave);
+  border-bottom: 2px solid var(--cor-tinta);
+  padding: 0.6rem 0.75rem;
+}
+
+.admin-tabela td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--cor-fundo-alt);
+}
+
+.celula-mono {
+  font-family: var(--fonte-mono);
+  font-size: 0.85rem;
+}
+
+.admin-tabela__acoes {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.etiqueta-estoque-tabela {
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  background-color: var(--cor-estoque);
+  color: #fff;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--raio-padrao);
+}
+
+.etiqueta-estoque-tabela--baixo {
+  background-color: var(--cor-erro);
+}
+
+/* =========================================================
+   FILTROS (lista de produtos admin)
+   ========================================================= */
+.admin-filtros {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.admin-filtros input,
+.admin-filtros select {
+  padding: 0.6rem 0.8rem;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  font-family: var(--fonte-corpo);
+  font-size: 0.9rem;
+}
+
+.admin-filtros input[type="search"] {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* =========================================================
+   FORMULÁRIO DE PRODUTO
+   ========================================================= */
+.form-admin {
+  max-width: 720px;
+}
+
+.grade-form-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.grade-form-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.campo-formulario--checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.campo-formulario--checkbox input {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 640px) {
+  .grade-form-2col,
+  .grade-form-3col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   GALERIA DE IMAGENS (produto admin)
+   ========================================================= */
+.galeria-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.galeria-admin__item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  overflow: hidden;
+}
+
+.galeria-admin__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.galeria-admin__remover {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--cor-erro);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+/* =========================================================
+   MENSAGENS DE CONTATO (admin)
+   ========================================================= */
+.lista-contatos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cartao-contato {
+  background-color: #fff;
+  border: 2px solid var(--cor-fundo-alt);
+  border-radius: var(--raio-padrao);
+  padding: 1.25rem;
+}
+
+.cartao-contato--nao-lido {
+  border-color: var(--cor-azul-aco);
+  background-color: #F5F9FA;
+}
+
+.cartao-contato__cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.cartao-contato__data {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--cor-tinta-suave);
+  font-family: var(--fonte-mono);
+}
+
+.etiqueta-nao-lido {
+  background-color: var(--cor-azul-aco);
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--raio-padrao);
+  white-space: nowrap;
+}
+
+.cartao-contato__contato {
+  font-size: 0.85rem;
+  color: var(--cor-tinta-suave);
+  margin: 0 0 0.6rem;
+}
+
+.cartao-contato__contato a {
+  color: var(--cor-azul-aco);
+}
+
+.cartao-contato__mensagem {
+  margin: 0 0 0.75rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .admin-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .admin-sidebar .link-discreto {
+    margin-top: 0 !important;
+  }
+}

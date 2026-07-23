@@ -1,0 +1,82 @@
+<%- include('../partials/admin-header') %>
+
+<section class="admin-secao">
+  <form id="form-produto" class="form-admin" data-modo="<%= modo %>" data-id="<%= produto ? produto.id : '' %>">
+    <div class="grade-form-2col">
+      <div class="campo-formulario">
+        <label for="produto-codigo">Código</label>
+        <input type="text" id="produto-codigo" name="codigo" required value="<%= produto ? produto.codigo : '' %>">
+      </div>
+      <div class="campo-formulario">
+        <label for="produto-marca">Marca</label>
+        <input type="text" id="produto-marca" name="marca" value="<%= produto ? (produto.marca || '') : '' %>">
+      </div>
+    </div>
+
+    <div class="campo-formulario">
+      <label for="produto-nome">Nome do produto</label>
+      <input type="text" id="produto-nome" name="nome" required value="<%= produto ? produto.nome : '' %>">
+    </div>
+
+    <div class="campo-formulario">
+      <label for="produto-descricao">Descrição</label>
+      <textarea id="produto-descricao" name="descricao" rows="4"><%= produto ? (produto.descricao || '') : '' %></textarea>
+    </div>
+
+    <div class="grade-form-3col">
+      <div class="campo-formulario">
+        <label for="produto-preco">Preço (R$)</label>
+        <input type="number" id="produto-preco" name="preco" step="0.01" min="0" required value="<%= produto ? produto.preco : '' %>">
+      </div>
+      <div class="campo-formulario">
+        <label for="produto-estoque">Estoque</label>
+        <input type="number" id="produto-estoque" name="estoque" min="0" step="1" value="<%= produto ? produto.estoque : 0 %>">
+      </div>
+      <div class="campo-formulario">
+        <label for="produto-categoria">Categoria</label>
+        <select id="produto-categoria" name="categoriaId">
+          <option value="">Sem categoria</option>
+          <% categorias.forEach(cat => { %>
+            <option value="<%= cat.id %>" <%= produto && produto.categoriaId === cat.id ? 'selected' : '' %>><%= cat.name %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+
+    <div class="campo-formulario campo-formulario--checkbox">
+      <input type="checkbox" id="produto-destaque" name="destaque" <%= produto && produto.destaque ? 'checked' : '' %>>
+      <label for="produto-destaque" style="margin: 0;">Exibir como produto em destaque na Home</label>
+    </div>
+
+    <p id="mensagem-form-produto" class="mensagem-erro" hidden></p>
+
+    <button type="submit" class="botao botao--primario">
+      <%= modo === 'criar' ? 'Cadastrar produto' : 'Salvar alterações' %>
+    </button>
+  </form>
+</section>
+
+<% if (modo === 'editar') { %>
+  <section class="admin-secao" style="margin-top: 1.5rem;">
+    <h2 style="font-size: 1.1rem;">Galeria de imagens</h2>
+    <p style="color: var(--cor-tinta-suave); font-size: 0.9rem;">Até 6 imagens. A primeira da lista é usada como capa do produto.</p>
+
+    <div class="galeria-admin" id="galeria-admin" data-produto-id="<%= produto.id %>">
+      <% imagens.forEach(img => { %>
+        <div class="galeria-admin__item" data-imagem-id="<%= img.id %>">
+          <img src="<%= img.url %>" alt="">
+          <button type="button" class="galeria-admin__remover" data-imagem-id="<%= img.id %>" aria-label="Remover esta imagem">✕</button>
+        </div>
+      <% }) %>
+    </div>
+
+    <label class="botao botao--secundario" style="margin-top: 1rem; display: inline-block; cursor: pointer;">
+      + Adicionar imagens
+      <input type="file" id="input-imagens-produto" accept="image/png, image/jpeg, image/webp" multiple style="display: none;">
+    </label>
+  </section>
+<% } %>
+
+<script src="<%= asset('/js/admin-produto-form.js') %>"></script>
+
+<%- include('../partials/admin-footer') %>

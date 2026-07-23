@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+
+<section class="container pagina-autenticacao">
+  <div class="cartao-autenticacao">
+    <h1>Recuperar senha</h1>
+    <p class="pagina-autenticacao__subtitulo">
+      Informe seu e-mail cadastrado e enviaremos um link para você criar uma nova senha.
+    </p>
+
+    <% if (typeof mensagemSucesso !== 'undefined' && mensagemSucesso) { %>
+      <p class="mensagem-sucesso"><%= mensagemSucesso %></p>
+    <% } %>
+
+    <form action="/api/auth/recuperar-senha" method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="campo-formulario">
+        <label for="recuperar-email">E-mail</label>
+        <input type="email" id="recuperar-email" name="email" required autocomplete="email">
+      </div>
+
+      <button type="submit" class="botao botao--primario botao--largura-total">Enviar link de recuperação</button>
+    </form>
+
+    <p class="pagina-autenticacao__rodape">
+      Lembrou a senha? <a href="/login">Voltar para o login</a>
+    </p>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

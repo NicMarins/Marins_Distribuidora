@@ -1,0 +1,45 @@
+<%- include('../partials/admin-header') %>
+
+<section class="admin-secao">
+  <h2 style="font-size: 1.1rem;">Usuários cadastrados (<%= usuarios.length %>)</h2>
+  <div class="admin-tabela-wrapper">
+    <table class="admin-tabela">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Telefone</th>
+          <th>Nível de acesso</th>
+          <th>Cadastrado em</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="corpo-tabela-usuarios">
+        <% usuarios.forEach(usuario => { %>
+          <tr data-usuario-id="<%= usuario.id %>">
+            <td><%= usuario.name %></td>
+            <td><%= usuario.email %></td>
+            <td><%= usuario.phone || '—' %></td>
+            <td>
+              <select class="seletor-papel" data-id="<%= usuario.id %>" data-papel-anterior="<%= usuario.role %>" <%= usuarioAtual && usuarioAtual.id === usuario.id ? 'disabled title="Você não pode alterar seu próprio nível de acesso"' : '' %>>
+                <option value="cliente" <%= usuario.role === 'cliente' ? 'selected' : '' %>>Cliente</option>
+                <option value="funcionario" <%= usuario.role === 'funcionario' ? 'selected' : '' %>>Funcionário</option>
+                <option value="administrador" <%= usuario.role === 'administrador' ? 'selected' : '' %>>Administrador</option>
+              </select>
+            </td>
+            <td class="celula-mono"><%= new Date(usuario.created_at).toLocaleDateString('pt-BR') %></td>
+            <td>
+              <% if (!usuarioAtual || usuarioAtual.id !== usuario.id) { %>
+                <button type="button" class="link-discreto botao-excluir-usuario" data-id="<%= usuario.id %>" style="color: var(--cor-erro);">Excluir</button>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script src="<%= asset('/js/admin-usuarios.js') %>"></script>
+
+<%- include('../partials/admin-footer') %>

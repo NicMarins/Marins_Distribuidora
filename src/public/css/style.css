@@ -1,0 +1,905 @@
+/* =========================================================
+   DESIGN TOKENS
+   Identidade visual inspirada em suprimentos/embalagens:
+   papel kraft, rótulos de transporte e linhas de perfuração
+   (referência real aos produtos: rolos, pacotes, lacres).
+   ========================================================= */
+:root {
+  --cor-fundo: #FAFAF7;
+  --cor-fundo-alt: #F1EEE6;
+  --cor-tinta: #1F2421;
+  --cor-tinta-suave: #52605A;
+  --cor-acento: #F5C518;   /* amarelo-segurança: destaque, CTA */
+  --cor-acento-escuro: #C99A0B;
+  --cor-azul-aco: #2B4C5C; /* higiene / confiança */
+  --cor-kraft: #C9A66B;    /* papel de embalagem */
+  --cor-estoque: #4C7A5E;  /* indicador de disponibilidade */
+  --cor-erro: #B84A3E;
+
+  --fonte-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --fonte-corpo: 'Work Sans', 'Segoe UI', sans-serif;
+  --fonte-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --raio-padrao: 4px;
+  --sombra-suave: 0 2px 8px rgba(31, 36, 33, 0.08);
+  --largura-maxima: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte-corpo);
+  background-color: var(--cor-fundo);
+  color: var(--cor-tinta);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  max-width: var(--largura-maxima);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Foco visível para navegação por teclado (acessibilidade) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-azul-aco);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   CABEÇALHO
+   ========================================================= */
+.cabecalho {
+  background-color: var(--cor-fundo);
+  border-bottom: 2px solid var(--cor-tinta);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.cabecalho__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+.marca {
+  font-family: var(--fonte-display);
+  font-size: 1.4rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.marca__selo {
+  background-color: var(--cor-acento);
+  color: var(--cor-tinta);
+  font-family: var(--fonte-mono);
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--raio-padrao);
+  letter-spacing: 0.05em;
+}
+
+.nav-principal {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-principal a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.4rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.nav-principal a:hover,
+.nav-principal a:focus-visible {
+  border-color: var(--cor-acento);
+}
+
+.nav-acoes {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.botao-menu-mobile {
+  display: none;
+  background: none;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  padding: 0.4rem 0.6rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+.botao {
+  display: inline-block;
+  font-family: var(--fonte-corpo);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--raio-padrao);
+  border: 2px solid var(--cor-tinta);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.botao:hover {
+  transform: translateY(-1px);
+}
+
+.botao--primario {
+  background-color: var(--cor-acento);
+  color: var(--cor-tinta);
+}
+
+.botao--primario:hover {
+  background-color: var(--cor-acento-escuro);
+}
+
+.botao--secundario {
+  background-color: transparent;
+  color: var(--cor-tinta);
+}
+
+.botao--secundario:hover {
+  background-color: var(--cor-fundo-alt);
+}
+
+/* =========================================================
+   CARTÃO "LINHA DE PERFURAÇÃO"
+   Elemento-assinatura: borda tracejada que remete às linhas
+   de corte de rolos de saco de lixo / papel toalha / plástico filme.
+   ========================================================= */
+.cartao-perfurado {
+  position: relative;
+  background-color: #fff;
+  border: 2px dashed var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  padding: 1.5rem;
+}
+
+.cartao-perfurado::before,
+.cartao-perfurado::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background-color: var(--cor-fundo);
+  border: 2px solid var(--cor-tinta);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cartao-perfurado::before {
+  left: -9px;
+}
+
+.cartao-perfurado::after {
+  right: -9px;
+}
+
+/* =========================================================
+   HERO (Home)
+   ========================================================= */
+.hero {
+  padding: 4rem 0;
+  border-bottom: 2px solid var(--cor-tinta);
+}
+
+.hero__etiqueta {
+  display: inline-block;
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  background-color: var(--cor-azul-aco);
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--raio-padrao);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.hero__titulo {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  max-width: 18ch;
+}
+
+.hero__descricao {
+  font-size: 1.1rem;
+  color: var(--cor-tinta-suave);
+  max-width: 50ch;
+  margin-bottom: 2rem;
+}
+
+.hero__acoes {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   RODAPÉ
+   ========================================================= */
+.rodape {
+  background-color: var(--cor-tinta);
+  color: var(--cor-fundo);
+  margin-top: 4rem;
+  padding: 3rem 0 1.5rem;
+}
+
+.rodape__colunas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.rodape__colunas h3 {
+  font-size: 0.95rem;
+  color: var(--cor-acento);
+}
+
+.rodape__colunas ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rodape__colunas li {
+  margin-bottom: 0.5rem;
+}
+
+.rodape__colunas a {
+  text-decoration: none;
+  color: var(--cor-fundo);
+  opacity: 0.85;
+}
+
+.rodape__colunas a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.rodape__base {
+  border-top: 1px solid rgba(250, 250, 247, 0.2);
+  padding-top: 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* =========================================================
+   PÁGINAS SIMPLES (Sobre, Contato, 404, Erro, Legal)
+   ========================================================= */
+.pagina-simples {
+  padding: 3rem 0;
+  min-height: 50vh;
+}
+
+.pagina-simples h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.codigo-erro {
+  font-family: var(--fonte-mono);
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: var(--cor-azul-aco);
+  margin: 0;
+  line-height: 1;
+}
+
+/* =========================================================
+   GRADE DE PRODUTOS E CARTÃO DE PRODUTO
+   ========================================================= */
+.grade-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.cartao-produto {
+  background-color: #fff;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  overflow: hidden;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.cartao-produto:hover {
+  box-shadow: var(--sombra-suave);
+  transform: translateY(-2px);
+}
+
+.cartao-produto__link {
+  text-decoration: none;
+  color: var(--cor-tinta);
+  display: block;
+}
+
+.cartao-produto__imagem {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background-color: var(--cor-fundo-alt);
+}
+
+.cartao-produto__imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.etiqueta-estoque {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--raio-padrao);
+}
+
+.etiqueta-estoque--baixo {
+  background-color: var(--cor-erro);
+  color: #fff;
+}
+
+.cartao-produto__info {
+  padding: 1rem;
+}
+
+.cartao-produto__codigo {
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  color: var(--cor-tinta-suave);
+}
+
+.cartao-produto__nome {
+  font-family: var(--fonte-corpo);
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.35rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cartao-produto__marca {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--cor-tinta-suave);
+  margin-bottom: 0.5rem;
+}
+
+.cartao-produto__preco {
+  font-family: var(--fonte-display);
+  font-size: 1.1rem;
+  color: var(--cor-azul-aco);
+}
+
+/* =========================================================
+   PÁGINA DE CATÁLOGO
+   ========================================================= */
+.pagina-catalogo {
+  padding: 2.5rem 0 4rem;
+}
+
+.barra-busca {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.barra-busca input[type="search"] {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+}
+
+.layout-catalogo {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2.5rem;
+}
+
+.lista-filtros {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+
+.lista-filtros li a {
+  display: block;
+  text-decoration: none;
+  color: var(--cor-tinta);
+  padding: 0.4rem 0;
+  font-size: 0.9rem;
+  border-left: 3px solid transparent;
+  padding-left: 0.6rem;
+}
+
+.lista-filtros li a:hover {
+  color: var(--cor-azul-aco);
+}
+
+.filtro-ativo {
+  border-left-color: var(--cor-acento) !important;
+  font-weight: 700;
+}
+
+.resultados-catalogo__contagem {
+  color: var(--cor-tinta-suave);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+}
+
+.historico-busca {
+  position: relative;
+  margin-top: -1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.historico-busca__item {
+  background-color: var(--cor-fundo-alt);
+  border: 1px solid var(--cor-tinta);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.historico-busca__item:hover {
+  background-color: var(--cor-acento);
+}
+
+.paginacao {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.paginacao__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  text-decoration: none;
+  color: var(--cor-tinta);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.paginacao__link--ativo {
+  background-color: var(--cor-acento);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* =========================================================
+   PÁGINA DE PRODUTO
+   ========================================================= */
+.pagina-produto {
+  padding: 2rem 0 4rem;
+}
+
+.trilha {
+  font-size: 0.85rem;
+  color: var(--cor-tinta-suave);
+  margin-bottom: 1.5rem;
+}
+
+.trilha a {
+  text-decoration: none;
+  color: var(--cor-azul-aco);
+}
+
+.layout-produto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.galeria-produto__principal {
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background-color: #fff;
+}
+
+.galeria-produto__principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+  transition: transform 0.2s ease;
+}
+
+.imagem-principal--zoom {
+  transform: scale(1.6);
+  cursor: zoom-out;
+}
+
+.galeria-produto__miniaturas {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.miniatura {
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  padding: 0;
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.miniatura--ativa {
+  opacity: 1;
+  border-color: var(--cor-acento-escuro);
+}
+
+.detalhes-produto__codigo {
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  color: var(--cor-tinta-suave);
+}
+
+.detalhes-produto__marca {
+  display: block;
+  color: var(--cor-tinta-suave);
+  margin-bottom: 0.75rem;
+}
+
+.detalhes-produto__preco {
+  display: block;
+  font-family: var(--fonte-display);
+  font-size: 2rem;
+  color: var(--cor-azul-aco);
+  margin-bottom: 0.5rem;
+}
+
+.detalhes-produto__estoque {
+  font-size: 0.9rem;
+  color: var(--cor-estoque);
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.detalhes-produto__estoque--baixo {
+  color: var(--cor-erro);
+}
+
+.detalhes-produto__descricao {
+  color: var(--cor-tinta-suave);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.produtos-relacionados {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 2px solid var(--cor-tinta);
+}
+
+/* =========================================================
+   FORMULÁRIOS (Login, Cadastro, Perfil, Contato)
+   ========================================================= */
+.pagina-autenticacao {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.cartao-autenticacao {
+  width: 100%;
+  max-width: 420px;
+  background-color: #fff;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  padding: 2rem;
+}
+
+.pagina-autenticacao__subtitulo {
+  color: var(--cor-tinta-suave);
+  margin-bottom: 1.5rem;
+}
+
+.pagina-autenticacao__rodape {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.campo-formulario {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.campo-formulario label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.campo-formulario input,
+.campo-formulario textarea,
+.campo-formulario select {
+  padding: 0.65rem 0.8rem;
+  border: 2px solid var(--cor-tinta);
+  border-radius: var(--raio-padrao);
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+  background-color: var(--cor-fundo);
+}
+
+.dica-campo {
+  font-size: 0.78rem;
+  color: var(--cor-tinta-suave);
+}
+
+.mensagem-erro {
+  background-color: #FBEAE8;
+  color: var(--cor-erro);
+  border: 1px solid var(--cor-erro);
+  border-radius: var(--raio-padrao);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+
+.mensagem-sucesso {
+  background-color: #E9F2EC;
+  color: var(--cor-estoque);
+  border: 1px solid var(--cor-estoque);
+  border-radius: var(--raio-padrao);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.25rem;
+}
+
+.lista-erros {
+  background-color: #FBEAE8;
+  border: 1px solid var(--cor-erro);
+  border-radius: var(--raio-padrao);
+  padding: 0.8rem 1.2rem;
+  margin-bottom: 1.25rem;
+  color: var(--cor-erro);
+  font-size: 0.88rem;
+}
+
+.lista-erros li {
+  margin-bottom: 0.2rem;
+}
+
+.lista-erros li:last-child {
+  margin-bottom: 0;
+}
+
+.link-discreto {
+  font-size: 0.85rem;
+  color: var(--cor-azul-aco);
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.botao--largura-total {
+  width: 100%;
+}
+
+/* =========================================================
+   PÁGINA DE CONTATO
+   ========================================================= */
+.layout-contato {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.canais-contato {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .layout-contato {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   PERFIL DO USUÁRIO
+   ========================================================= */
+.pagina-perfil {
+  padding: 2.5rem 0 4rem;
+}
+
+.layout-perfil {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.menu-perfil__avatar {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.menu-perfil__avatar img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--cor-tinta);
+  margin: 0 auto 0.6rem;
+}
+
+/* =========================================================
+   PÁGINAS LEGAIS
+   ========================================================= */
+.pagina-legal {
+  max-width: 70ch;
+}
+
+.pagina-legal__atualizacao {
+  color: var(--cor-tinta-suave);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.pagina-legal h2 {
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+.pagina-legal p {
+  color: var(--cor-tinta-suave);
+  line-height: 1.7;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 768px) {
+  .nav-principal,
+  .nav-acoes {
+    display: none;
+  }
+
+  .botao-menu-mobile {
+    display: inline-block;
+  }
+
+  .cabecalho.menu-aberto .nav-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--cor-fundo);
+    border-bottom: 2px solid var(--cor-tinta);
+    padding: 1rem 1.5rem;
+  }
+
+  .cabecalho.menu-aberto .nav-principal a {
+    padding: 0.75rem 0;
+    width: 100%;
+  }
+
+  .hero__acoes {
+    flex-direction: column;
+  }
+
+  .botao {
+    width: 100%;
+  }
+
+  .layout-catalogo,
+  .layout-produto,
+  .layout-perfil {
+    grid-template-columns: 1fr;
+  }
+
+  .filtros-catalogo,
+  .menu-perfil {
+    border-bottom: 2px solid var(--cor-tinta);
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .galeria-produto__principal {
+    aspect-ratio: 4 / 3;
+  }
+}

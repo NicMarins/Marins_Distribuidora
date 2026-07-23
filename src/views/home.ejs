@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero__etiqueta">LOTE DISPONÍVEL PARA ENVIO</span>
+    <h1 class="hero__titulo">Descartáveis certos, no volume certo, na hora certa.</h1>
+    <p class="hero__descricao">
+      Embalagens, itens de festa, higiene e uso único para o seu negócio ou
+      sua casa — com estoque atualizado e entrega rápida.
+    </p>
+    <div class="hero__acoes">
+      <a href="/catalogo" class="botao botao--primario">Ver catálogo</a>
+      <a href="/sobre" class="botao botao--secundario">Conhecer a empresa</a>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="padding: 3rem 0;">
+  <h2>Produtos em destaque</h2>
+  <div class="grade-produtos">
+    <% destaques.forEach(produto => { %>
+      <%- include('partials/cartao-produto', { produto }) %>
+    <% }) %>
+  </div>
+</section>
+
+<section class="container" style="padding: 0 0 3rem;">
+  <div class="cartao-perfurado">
+    <h2 style="font-size: 1.2rem;">Compra sem complicação</h2>
+    <p style="color: var(--cor-tinta-suave); margin-bottom: 0;">
+      Estoque atualizado em tempo real, embalagens no volume certo para o
+      seu consumo e suporte direto pelo WhatsApp.
+    </p>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

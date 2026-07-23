@@ -1,0 +1,48 @@
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <div class="rodape__colunas">
+        <div>
+          <h3>Navegação</h3>
+          <ul>
+            <li><a href="/">Início</a></li>
+            <li><a href="/catalogo">Catálogo</a></li>
+            <li><a href="/sobre">Sobre nós</a></li>
+            <li><a href="/contato">Contato</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Minha conta</h3>
+          <ul>
+            <li><a href="/login">Entrar</a></li>
+            <li><a href="/cadastro">Criar conta</a></li>
+            <li><a href="/perfil">Meu perfil</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Institucional</h3>
+          <ul>
+            <li><a href="/politica-de-privacidade">Política de Privacidade</a></li>
+            <li><a href="/termos-de-uso">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Fale conosco</h3>
+          <ul>
+            <li><a href="https://wa.me/<%= config.site_whatsapp || '5500000000000' %>" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a href="mailto:<%= config.site_email || 'contato@descartecerto.com.br' %>"><%= config.site_email || 'contato@descartecerto.com.br' %></a></li>
+            <% if (config.site_instagram) { %><li><a href="<%= config.site_instagram %>" target="_blank" rel="noopener">Instagram</a></li><% } %>
+            <% if (config.site_facebook) { %><li><a href="<%= config.site_facebook %>" target="_blank" rel="noopener">Facebook</a></li><% } %>
+          </ul>
+        </div>
+      </div>
+      <div class="rodape__base">
+        &copy; <%= new Date().getFullYear() %> <%= config.site_nome || 'DescarteCerto' %>. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <script src="<%= asset('/js/main.js') %>"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<%- include('partials/header') %>
+
+<script type="application/ld+json"><%- jsonLdProduto %></script>
+
+<section class="container pagina-produto">
+  <nav aria-label="Caminho de navegação" class="trilha">
+    <a href="/">Início</a> / <a href="/catalogo">Catálogo</a> / <span><%= produto.nome %></span>
+  </nav>
+
+  <div class="layout-produto">
+    <div class="galeria-produto">
+      <div class="galeria-produto__principal">
+        <img
+          id="imagem-principal"
+          src="<%= produto.imagens[0] %>"
+          alt="<%= produto.nome %>"
+          data-fallback="/images/placeholder-produto.svg"
+        >
+      </div>
+      <% if (produto.imagens.length > 1) { %>
+        <div class="galeria-produto__miniaturas">
+          <% produto.imagens.forEach((img, indice) => { %>
+            <button
+              type="button"
+              class="miniatura <%= indice === 0 ? 'miniatura--ativa' : '' %>"
+              data-imagem="<%= img %>"
+              aria-label="Ver imagem <%= indice + 1 %> de <%= produto.nome %>"
+            >
+              <img src="<%= img %>" alt="" data-fallback="/images/placeholder-produto.svg">
+            </button>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <div class="detalhes-produto">
+      <span class="detalhes-produto__codigo"><%= produto.codigo %></span>
+      <h1><%= produto.nome %></h1>
+      <span class="detalhes-produto__marca">Marca: <%= produto.marca %></span>
+
+      <strong class="detalhes-produto__preco">R$ <%= produto.preco.toFixed(2).replace('.', ',') %></strong>
+
+      <p class="detalhes-produto__estoque <%= produto.estoque <= 20 ? 'detalhes-produto__estoque--baixo' : '' %>">
+        <% if (produto.estoque > 20) { %>
+          Em estoque (<%= produto.estoque %> unidades disponíveis)
+        <% } else if (produto.estoque > 0) { %>
+          Últimas unidades — apenas <%= produto.estoque %> em estoque
+        <% } else { %>
+          Fora de estoque no momento
+        <% } %>
+      </p>
+
+      <p class="detalhes-produto__descricao"><%= produto.descricao %></p>
+
+      <div class="detalhes-produto__acoes">
+        <a href="https://wa.me/5500000000000?text=Tenho%20interesse%20no%20produto%20<%= encodeURIComponent(produto.codigo) %>" class="botao botao--primario" target="_blank" rel="noopener">
+          Consultar pelo WhatsApp
+        </a>
+      </div>
+
+      <div class="cartao-perfurado" style="margin-top: 2rem;">
+        <strong>Categoria:</strong> <%= produto.categoria %>
+      </div>
+    </div>
+  </div>
+
+  <% if (relacionados.length > 0) { %>
+    <section class="produtos-relacionados">
+      <h2>Produtos relacionados</h2>
+      <div class="grade-produtos">
+        <% relacionados.forEach(rel => { %>
+          <%- include('partials/cartao-produto', { produto: rel }) %>
+        <% }) %>
+      </div>
+    </section>
+  <% } %>
+</section>
+
+<script src="<%= asset('/js/produto.js') %>"></script>
+
+<%- include('partials/footer') %>

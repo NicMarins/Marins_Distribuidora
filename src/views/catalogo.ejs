@@ -1,0 +1,95 @@
+<%- include('partials/header') %>
+
+<section class="container pagina-catalogo">
+  <h1>Catálogo</h1>
+
+  <form class="barra-busca" action="/catalogo" method="GET" role="search" id="form-busca-catalogo">
+    <label for="busca-catalogo" class="sr-only">Buscar por nome, código ou marca</label>
+    <input
+      type="search"
+      id="busca-catalogo"
+      name="busca"
+      placeholder="Buscar por nome, código ou marca..."
+      value="<%= filtroAtual.busca %>"
+      list="sugestoes-busca"
+      autocomplete="off"
+    >
+    <datalist id="sugestoes-busca">
+      <% categorias.forEach(cat => { %>
+        <option value="<%= cat.name %>">
+      <% }) %>
+    </datalist>
+    <% if (filtroAtual.categoria) { %>
+      <input type="hidden" name="categoria" value="<%= filtroAtual.categoria %>">
+    <% } %>
+    <button type="submit" class="botao botao--primario">Buscar</button>
+  </form>
+
+  <div id="historico-busca" class="historico-busca" hidden></div>
+
+  <div class="layout-catalogo">
+    <aside class="filtros-catalogo">
+      <h2 style="font-size: 1rem;">Categorias</h2>
+      <ul class="lista-filtros">
+        <li>
+          <a href="/catalogo" class="<%= !filtroAtual.categoria ? 'filtro-ativo' : '' %>">Todas</a>
+        </li>
+        <% categorias.forEach(cat => { %>
+          <li>
+            <a href="/catalogo?categoria=<%= encodeURIComponent(cat.slug) %>" class="<%= filtroAtual.categoria === cat.slug ? 'filtro-ativo' : '' %>">
+              <%= cat.name %>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+
+      <h2 style="font-size: 1rem; margin-top: 2rem;">Ordenar por</h2>
+      <ul class="lista-filtros">
+        <li><a href="/catalogo?ordenar=nome<%= filtroAtual.categoria ? '&categoria='+encodeURIComponent(filtroAtual.categoria) : '' %>" class="<%= filtroAtual.ordenar === 'nome' ? 'filtro-ativo' : '' %>">Nome (A-Z)</a></li>
+        <li><a href="/catalogo?ordenar=menor-preco<%= filtroAtual.categoria ? '&categoria='+encodeURIComponent(filtroAtual.categoria) : '' %>" class="<%= filtroAtual.ordenar === 'menor-preco' ? 'filtro-ativo' : '' %>">Menor preço</a></li>
+        <li><a href="/catalogo?ordenar=maior-preco<%= filtroAtual.categoria ? '&categoria='+encodeURIComponent(filtroAtual.categoria) : '' %>" class="<%= filtroAtual.ordenar === 'maior-preco' ? 'filtro-ativo' : '' %>">Maior preço</a></li>
+        <li><a href="/catalogo?ordenar=recentes<%= filtroAtual.categoria ? '&categoria='+encodeURIComponent(filtroAtual.categoria) : '' %>" class="<%= filtroAtual.ordenar === 'recentes' ? 'filtro-ativo' : '' %>">Mais recentes</a></li>
+      </ul>
+    </aside>
+
+    <div class="resultados-catalogo">
+      <p class="resultados-catalogo__contagem" id="contagem-resultados">
+        <%= total %> produto<%= total === 1 ? '' : 's' %> encontrado<%= total === 1 ? '' : 's' %>
+      </p>
+
+      <div id="area-resultados">
+        <% if (produtos.length === 0) { %>
+          <div class="cartao-perfurado">
+            <h2 style="font-size: 1.1rem;">Nenhum produto encontrado</h2>
+            <p style="color: var(--cor-tinta-suave); margin-bottom: 0;">
+              Tente buscar por outro termo ou remova os filtros aplicados.
+            </p>
+          </div>
+        <% } else { %>
+          <div class="grade-produtos" id="grade-produtos">
+            <% produtos.forEach(produto => { %>
+              <%- include('partials/cartao-produto', { produto }) %>
+            <% }) %>
+          </div>
+        <% } %>
+      </div>
+
+      <% if (totalPaginas > 1) { %>
+        <nav class="paginacao" aria-label="Paginação do catálogo">
+          <% for (let p = 1; p <= totalPaginas; p++) { %>
+            <a
+              href="/catalogo?pagina=<%= p %><%= filtroAtual.categoria ? '&categoria='+encodeURIComponent(filtroAtual.categoria) : '' %><%= filtroAtual.busca ? '&busca='+encodeURIComponent(filtroAtual.busca) : '' %><%= filtroAtual.ordenar ? '&ordenar='+encodeURIComponent(filtroAtual.ordenar) : '' %>"
+              class="paginacao__link <%= p === paginaAtual ? 'paginacao__link--ativo' : '' %>"
+            >
+              <%= p %>
+            </a>
+          <% } %>
+        </nav>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<script src="<%= asset('/js/catalogo.js') %>"></script>
+
+<%- include('partials/footer') %>

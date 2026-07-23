@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= titulo %> | <%= config.site_nome || 'DescarteCerto' %></title>
+  <meta name="description" content="<%= typeof descricao !== 'undefined' ? descricao : 'Produtos descartáveis para o seu dia a dia: embalagens, festas, higiene e uso único.' %>">
+  <link rel="canonical" href="<%= urlAtual %>">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+
+  <!-- Open Graph (compartilhamento em redes sociais) -->
+  <meta property="og:type" content="<%= typeof ogTipo !== 'undefined' ? ogTipo : 'website' %>">
+  <meta property="og:title" content="<%= titulo %> | <%= config.site_nome || 'DescarteCerto' %>">
+  <meta property="og:description" content="<%= typeof descricao !== 'undefined' ? descricao : 'Produtos descartáveis para o seu dia a dia: embalagens, festas, higiene e uso único.' %>">
+  <meta property="og:url" content="<%= urlAtual %>">
+  <meta property="og:site_name" content="<%= config.site_nome || 'DescarteCerto' %>">
+  <% if (typeof ogImagem !== 'undefined' && ogImagem) { %>
+    <meta property="og:image" content="<%= ogImagem %>">
+  <% } %>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= titulo %> | <%= config.site_nome || 'DescarteCerto' %>">
+  <meta name="twitter:description" content="<%= typeof descricao !== 'undefined' ? descricao : 'Produtos descartáveis para o seu dia a dia: embalagens, festas, higiene e uso único.' %>">
+
+  <!-- Schema.org: identifica a loja para buscadores (rich results) -->
+  <script type="application/ld+json"><%- JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Store',
+    name: config.site_nome || 'DescarteCerto',
+    url: urlAtual.split('?')[0],
+    ...(config.site_email ? { email: config.site_email } : {}),
+  }).replace(/</g, '\\u003c') %></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="<%= asset('/css/style.css') %>">
+  <script src="<%= asset('/js/csrf.js') %>"></script>
+</head>
+<body>
+  <a href="#conteudo-principal" class="pular-para-conteudo" style="position:absolute; left:-9999px;">Pular para o conteúdo</a>
+
+  <header class="cabecalho">
+    <div class="container cabecalho__barra">
+      <a href="/" class="marca">
+        Descarte<span class="marca__selo">CERTO</span>
+      </a>
+
+      <nav aria-label="Navegação principal">
+        <ul class="nav-principal">
+          <li><a href="/">Início</a></li>
+          <li><a href="/catalogo">Catálogo</a></li>
+          <li><a href="/sobre">Sobre</a></li>
+          <li><a href="/contato">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-acoes">
+        <% if (usuarioAtual) { %>
+          <% if (usuarioAtual.papel === 'administrador' || usuarioAtual.papel === 'funcionario') { %>
+            <a href="/admin" class="botao botao--secundario">Painel</a>
+          <% } %>
+          <a href="/perfil" class="botao botao--secundario">Meu perfil</a>
+          <a href="/logout" class="botao botao--primario">Sair</a>
+        <% } else { %>
+          <a href="/login" class="botao botao--secundario">Entrar</a>
+          <a href="/cadastro" class="botao botao--primario">Criar conta</a>
+        <% } %>
+      </div>
+
+      <button class="botao-menu-mobile" aria-expanded="false" aria-label="Abrir menu de navegação">☰</button>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">

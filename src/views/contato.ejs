@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<section class="container pagina-simples pagina-contato">
+  <h1>Fale com a gente</h1>
+  <p style="color: var(--cor-tinta-suave); max-width: 55ch; margin-bottom: 2rem;">
+    Dúvidas sobre pedidos, volumes para revenda ou parcerias? Escolha o
+    canal mais rápido para você.
+  </p>
+
+  <div class="layout-contato">
+    <form class="cartao-autenticacao" action="/api/contato" method="POST" novalidate style="max-width: none;">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <% if (typeof mensagemSucesso !== 'undefined' && mensagemSucesso) { %>
+        <p class="mensagem-sucesso"><%= mensagemSucesso %></p>
+      <% } %>
+      <% if (typeof erros !== 'undefined' && erros.length) { %>
+        <ul class="lista-erros">
+          <% erros.forEach(erro => { %>
+            <li><%= erro.msg %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+
+      <div class="campo-formulario">
+        <label for="contato-nome">Nome</label>
+        <input type="text" id="contato-nome" name="nome" required autocomplete="name">
+      </div>
+
+      <div class="campo-formulario">
+        <label for="contato-email">E-mail</label>
+        <input type="email" id="contato-email" name="email" required autocomplete="email">
+      </div>
+
+      <div class="campo-formulario">
+        <label for="contato-telefone">Telefone</label>
+        <input type="tel" id="contato-telefone" name="telefone" autocomplete="tel">
+      </div>
+
+      <div class="campo-formulario">
+        <label for="contato-mensagem">Mensagem</label>
+        <textarea id="contato-mensagem" name="mensagem" rows="5" required></textarea>
+      </div>
+
+      <button type="submit" class="botao botao--primario botao--largura-total">Enviar mensagem</button>
+    </form>
+
+    <aside class="cartao-perfurado canais-contato">
+      <h2 style="font-size: 1.1rem;">Outros canais</h2>
+
+      <a href="https://wa.me/<%= config.site_whatsapp || '5500000000000' %>" target="_blank" rel="noopener" class="botao botao--primario botao--largura-total" style="margin-bottom: 0.75rem;">
+        Conversar no WhatsApp
+      </a>
+      <a href="mailto:<%= config.site_email || 'contato@descartecerto.com.br' %>" class="botao botao--secundario botao--largura-total">
+        Enviar e-mail
+      </a>
+
+      <h2 style="font-size: 1rem; margin-top: 2rem;">Redes sociais</h2>
+      <ul class="lista-filtros">
+        <% if (config.site_instagram) { %><li><a href="<%= config.site_instagram %>" target="_blank" rel="noopener">Instagram</a></li><% } %>
+        <% if (config.site_facebook) { %><li><a href="<%= config.site_facebook %>" target="_blank" rel="noopener">Facebook</a></li><% } %>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

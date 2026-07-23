@@ -1,0 +1,67 @@
+<%- include('../partials/admin-header') %>
+
+<section class="admin-grade-cards">
+  <div class="admin-card">
+    <span class="admin-card__rotulo">Produtos cadastrados</span>
+    <strong class="admin-card__numero"><%= totalProdutos %></strong>
+    <a href="/admin/produtos" class="link-discreto">Gerenciar produtos →</a>
+  </div>
+  <div class="admin-card">
+    <span class="admin-card__rotulo">Categorias ativas</span>
+    <strong class="admin-card__numero"><%= totalCategorias %></strong>
+    <a href="/admin/categorias" class="link-discreto">Gerenciar categorias →</a>
+  </div>
+  <div class="admin-card">
+    <span class="admin-card__rotulo">Contatos não lidos</span>
+    <strong class="admin-card__numero"><%= contatosNaoLidos %></strong>
+    <a href="/admin/contatos" class="link-discreto">Ver mensagens →</a>
+  </div>
+  <div class="admin-card admin-card--alerta">
+    <span class="admin-card__rotulo">Estoque baixo</span>
+    <strong class="admin-card__numero"><%= estoqueBaixo %></strong>
+    <a href="/admin/produtos?estoque=baixo" class="link-discreto">Revisar itens →</a>
+  </div>
+</section>
+
+<section class="admin-secao">
+  <div class="admin-secao__cabecalho">
+    <h2>Produtos recentes</h2>
+    <a href="/admin/produtos/novo" class="botao botao--primario">+ Novo produto</a>
+  </div>
+
+  <div class="admin-tabela-wrapper">
+    <table class="admin-tabela">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Categoria</th>
+          <th>Preço</th>
+          <th>Estoque</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% produtos.forEach(produto => { %>
+          <tr>
+            <td class="celula-mono"><%= produto.codigo %></td>
+            <td><%= produto.nome %></td>
+            <td><%= produto.categoria %></td>
+            <td>R$ <%= produto.preco.toFixed(2).replace('.', ',') %></td>
+            <td>
+              <span class="etiqueta-estoque-tabela <%= produto.estoque <= 20 ? 'etiqueta-estoque-tabela--baixo' : '' %>">
+                <%= produto.estoque %>
+              </span>
+            </td>
+            <td class="admin-tabela__acoes">
+              <a href="/admin/produtos/<%= produto.id %>/editar" class="link-discreto">Editar</a>
+              <a href="/produto/<%= produto.id %>" class="link-discreto" target="_blank">Ver</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<%- include('../partials/admin-footer') %>

@@ -1,0 +1,16 @@
+<article class="cartao-produto">
+  <a href="/produto/<%= produto.id %>/<%= produto.slug %>" class="cartao-produto__link">
+    <div class="cartao-produto__imagem">
+      <img src="<%= produto.imagens[0] %>" alt="<%= produto.nome %>" loading="lazy" data-fallback="/images/placeholder-produto.svg">
+      <% if (produto.estoque <= 20) { %>
+        <span class="etiqueta-estoque etiqueta-estoque--baixo">Últimas unidades</span>
+      <% } %>
+    </div>
+    <div class="cartao-produto__info">
+      <span class="cartao-produto__codigo"><%= produto.codigo %></span>
+      <h3 class="cartao-produto__nome"><%= produto.nome %></h3>
+      <span class="cartao-produto__marca"><%= produto.marca %></span>
+      <strong class="cartao-produto__preco">R$ <%= produto.preco.toFixed(2).replace('.', ',') %></strong>
+    </div>
+  </a>
+</article>

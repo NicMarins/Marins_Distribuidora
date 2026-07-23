@@ -1,0 +1,43 @@
+<%- include('../partials/admin-header') %>
+
+<section class="admin-secao" style="margin-bottom: 1.5rem;">
+  <h2 style="font-size: 1.1rem;">Nova categoria</h2>
+  <form id="form-nova-categoria" style="display: flex; gap: 0.75rem; align-items: flex-end; flex-wrap: wrap;">
+    <div class="campo-formulario" style="flex: 1; min-width: 220px; margin-bottom: 0;">
+      <label for="nome-categoria">Nome</label>
+      <input type="text" id="nome-categoria" name="nome" required placeholder="Ex: Copos e Talheres">
+    </div>
+    <button type="submit" class="botao botao--primario">Adicionar</button>
+  </form>
+  <p id="mensagem-categoria" class="mensagem-erro" hidden></p>
+</section>
+
+<section class="admin-secao">
+  <h2 style="font-size: 1.1rem;">Categorias cadastradas</h2>
+  <div class="admin-tabela-wrapper">
+    <table class="admin-tabela">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Slug (usado na URL)</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="corpo-tabela-categorias">
+        <% categorias.forEach(cat => { %>
+          <tr data-categoria-id="<%= cat.id %>">
+            <td><%= cat.name %></td>
+            <td class="celula-mono"><%= cat.slug %></td>
+            <td>
+              <button type="button" class="link-discreto botao-excluir-categoria" data-id="<%= cat.id %>" style="color: var(--cor-erro);">Excluir</button>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script src="<%= asset('/js/admin-categorias.js') %>"></script>
+
+<%- include('../partials/admin-footer') %>

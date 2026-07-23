@@ -1,0 +1,40 @@
+<%- include('../partials/admin-header') %>
+
+<section class="admin-secao">
+  <h2 style="font-size: 1.1rem;">Mensagens recebidas (<%= contatos.length %>)</h2>
+
+  <div class="lista-contatos" id="lista-contatos">
+    <% if (contatos.length === 0) { %>
+      <p style="color: var(--cor-tinta-suave);">Nenhuma mensagem recebida até o momento.</p>
+    <% } %>
+
+    <% contatos.forEach(contato => { %>
+      <article class="cartao-contato <%= !contato.read ? 'cartao-contato--nao-lido' : '' %>" data-contato-id="<%= contato.id %>">
+        <header class="cartao-contato__cabecalho">
+          <div>
+            <strong><%= contato.name %></strong>
+            <span class="cartao-contato__data"><%= new Date(contato.created_at).toLocaleString('pt-BR') %></span>
+          </div>
+          <% if (!contato.read) { %>
+            <span class="etiqueta-nao-lido">Não lido</span>
+          <% } %>
+        </header>
+
+        <p class="cartao-contato__contato">
+          <a href="mailto:<%= contato.email %>"><%= contato.email %></a>
+          <% if (contato.phone) { %> · <%= contato.phone %><% } %>
+        </p>
+
+        <p class="cartao-contato__mensagem"><%= contato.message %></p>
+
+        <% if (!contato.read) { %>
+          <button type="button" class="link-discreto botao-marcar-lido" data-id="<%= contato.id %>">Marcar como lido</button>
+        <% } %>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<script src="<%= asset('/js/admin-contatos.js') %>"></script>
+
+<%- include('../partials/admin-footer') %>

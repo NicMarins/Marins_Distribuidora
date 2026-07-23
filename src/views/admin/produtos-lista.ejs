@@ -1,0 +1,74 @@
+<%- include('../partials/admin-header') %>
+
+<section class="admin-secao__cabecalho" style="margin-bottom: 1.25rem;">
+  <h2 style="margin: 0;">Produtos (<%= total %>)</h2>
+  <a href="/admin/produtos/novo" class="botao botao--primario">+ Novo produto</a>
+</section>
+
+<form class="admin-filtros" method="GET" action="/admin/produtos">
+  <input type="search" name="busca" placeholder="Buscar por nome, código ou marca..." value="<%= filtroAtual.busca %>">
+  <select name="categoria">
+    <option value="">Todas as categorias</option>
+    <% categorias.forEach(cat => { %>
+      <option value="<%= cat.slug %>" <%= filtroAtual.categoria === cat.slug ? 'selected' : '' %>><%= cat.name %></option>
+    <% }) %>
+  </select>
+  <button type="submit" class="botao botao--secundario">Filtrar</button>
+</form>
+
+<section class="admin-secao">
+  <div class="admin-tabela-wrapper">
+    <table class="admin-tabela">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Categoria</th>
+          <th>Preço</th>
+          <th>Estoque</th>
+          <th>Destaque</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="corpo-tabela-produtos">
+        <% produtos.forEach(produto => { %>
+          <tr data-produto-id="<%= produto.id %>">
+            <td class="celula-mono"><%= produto.codigo %></td>
+            <td><%= produto.nome %></td>
+            <td><%= produto.categoria %></td>
+            <td>R$ <%= produto.preco.toFixed(2).replace('.', ',') %></td>
+            <td>
+              <span class="etiqueta-estoque-tabela <%= produto.estoque <= 20 ? 'etiqueta-estoque-tabela--baixo' : '' %>">
+                <%= produto.estoque %>
+              </span>
+            </td>
+            <td><%= produto.destaque ? 'Sim' : '—' %></td>
+            <td class="admin-tabela__acoes">
+              <a href="/admin/produtos/<%= produto.id %>/editar" class="link-discreto">Editar</a>
+              <a href="/produto/<%= produto.id %>" class="link-discreto" target="_blank">Ver</a>
+              <button type="button" class="link-discreto botao-excluir-produto" data-id="<%= produto.id %>" style="color: var(--cor-erro);">Excluir</button>
+            </td>
+          </tr>
+        <% }) %>
+        <% if (produtos.length === 0) { %>
+          <tr><td colspan="7">Nenhum produto encontrado com os filtros atuais.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if (totalPaginas > 1) { %>
+    <nav class="paginacao" aria-label="Paginação de produtos" style="margin-top: 1.5rem;">
+      <% for (let p = 1; p <= totalPaginas; p++) { %>
+        <a
+          href="/admin/produtos?pagina=<%= p %><%= filtroAtual.categoria ? '&categoria='+encodeURIComponent(filtroAtual.categoria) : '' %><%= filtroAtual.busca ? '&busca='+encodeURIComponent(filtroAtual.busca) : '' %>"
+          class="paginacao__link <%= p === paginaAtual ? 'paginacao__link--ativo' : '' %>"
+        ><%= p %></a>
+      <% } %>
+    </nav>
+  <% } %>
+</section>
+
+<script src="<%= asset('/js/admin-produtos.js') %>"></script>
+
+<%- include('../partials/admin-footer') %>
