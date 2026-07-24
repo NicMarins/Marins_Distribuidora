@@ -111,19 +111,25 @@ textarea:focus-visible {
   gap: 0.5rem;
 }
 
+.marca__logo {
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+}
+
 .marca__selo {
-  background-color: var(--cor-acento);
+  background-color: rgba(254, 254, 254, 0.864);
   color: var(--cor-tinta);
-  font-family: var(--fonte-mono);
-  font-size: 0.65rem;
-  padding: 0.15rem 0.4rem;
-  border-radius: var(--raio-padrao);
+  font-family: 'playfair display', 'Times New Roman', serif;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 10px;
   letter-spacing: 0.05em;
 }
 
 .nav-principal {
   display: flex;
-  gap: 1.5rem;
+  gap: 3.5rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -131,6 +137,7 @@ textarea:focus-visible {
 
 .nav-principal a {
   text-decoration: none;
+
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.4rem 0;
@@ -140,7 +147,7 @@ textarea:focus-visible {
 
 .nav-principal a:hover,
 .nav-principal a:focus-visible {
-  border-color: var(--cor-acento);
+  border-color: rgba(0, 77, 185, 0.864);
 }
 
 .nav-acoes {
@@ -181,7 +188,7 @@ textarea:focus-visible {
 }
 
 .botao--primario {
-  background-color: var(--cor-acento);
+  background-color: rgba(147, 192, 255, 0.864);
   color: var(--cor-tinta);
 }
 

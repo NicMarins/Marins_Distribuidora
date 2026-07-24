@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= titulo %> | <%= config.site_nome || 'DescarteCerto' %></title>
+  <title><%= titulo %> | <%= config.site_nome || 'Marins Distribuidora' %></title>
   <meta name="description" content="<%= typeof descricao !== 'undefined' ? descricao : 'Produtos descartáveis para o seu dia a dia: embalagens, festas, higiene e uso único.' %>">
   <link rel="canonical" href="<%= urlAtual %>">
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
@@ -19,14 +19,14 @@
   <% } %>
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<%= titulo %> | <%= config.site_nome || 'DescarteCerto' %>">
+  <meta name="twitter:title" content="<%= titulo %> | <%= config.site_nome || 'Marins Distribuidora' %>">
   <meta name="twitter:description" content="<%= typeof descricao !== 'undefined' ? descricao : 'Produtos descartáveis para o seu dia a dia: embalagens, festas, higiene e uso único.' %>">
 
   <!-- Schema.org: identifica a loja para buscadores (rich results) -->
   <script type="application/ld+json"><%- JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Store',
-    name: config.site_nome || 'DescarteCerto',
+    name: config.site_nome || 'Marins Distribuidora',
     url: urlAtual.split('?')[0],
     ...(config.site_email ? { email: config.site_email } : {}),
   }).replace(/</g, '\\u003c') %></script>
@@ -42,7 +42,8 @@
   <header class="cabecalho">
     <div class="container cabecalho__barra">
       <a href="/" class="marca">
-        Descarte<span class="marca__selo">CERTO</span>
+        <img src="/images/marinslogo.svg" alt="Logo Marins" class="marca__logo">
+        <span class="marca__selo">Marins <br> Distribuidora</span>
       </a>
 
       <nav aria-label="Navegação principal">
