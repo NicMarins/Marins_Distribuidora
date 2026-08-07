@@ -40,17 +40,32 @@ const upload = multer({
 async function salvarImagemProcessada(buffer, pastaDestino, opcoes = {}) {
   const { largura = 800, qualidade = 80 } = opcoes;
 
-  const nomeArquivo = `${crypto.randomBytes(16).toString('hex')}.webp`;
+  const nomeBase = crypto.randomBytes(16).toString('hex');
+  const arquivoWebp = `${nomeBase}.webp`;
+  const arquivoJpg = `${nomeBase}.jpg`;
+
   const caminhoPasta = path.join(__dirname, '..', 'uploads', pastaDestino);
   fs.mkdirSync(caminhoPasta, { recursive: true });
-  const caminhoCompleto = path.join(caminhoPasta, nomeArquivo);
 
+  const caminhoWebp = path.join(caminhoPasta, arquivoWebp);
+  const caminhoJpg = path.join(caminhoPasta, arquivoJpg);
+
+  // Salva WebP (principal)
   await sharp(buffer)
     .resize({ width: largura, withoutEnlargement: true })
     .webp({ quality: qualidade })
-    .toFile(caminhoCompleto);
+    .toFile(caminhoWebp);
 
-  return `/uploads/${pastaDestino}/${nomeArquivo}`;
+  // Salva também uma versão JPEG como fallback para navegadores que não suportam WebP.
+  // Mantemos qualidade um pouco maior para compensar perda em JPEG.
+  await sharp(buffer)
+    .resize({ width: largura, withoutEnlargement: true })
+    .jpeg({ quality: Math.min(90, qualidade + 10) })
+    .toFile(caminhoJpg);
+
+  // Por compatibilidade com o restante do código, retornamos a URL WebP (o existente).
+  // As views podem derivar o fallback trocando a extensão para .jpg quando necessário.
+  return `/uploads/${pastaDestino}/${arquivoWebp}`;
 }
 
 /**
