@@ -43,7 +43,9 @@ async function paginaProduto(req, res, next) {
 
   const relacionados = await produtoModel.listarRelacionados(produto);
   const imagemPrincipal = produto.imagens[0];
-  const ogImagem = imagemPrincipal?.startsWith('/uploads')
+  const ogImagem = imagemPrincipal?.startsWith('http')
+  ? imagemPrincipal
+  : imagemPrincipal
     ? `${req.protocol}://${req.get('host')}${imagemPrincipal}`
     : undefined;
 

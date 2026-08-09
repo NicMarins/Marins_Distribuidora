@@ -37,35 +37,47 @@ const upload = multer({
  * @param {{ largura?: number, qualidade?: number }} opcoes
  * @returns {Promise<string>} caminho público da imagem (ex: /uploads/avatars/xxx.webp)
  */
+const cloudinary = require('../config/cloudinary');
+
+/**
+ * Processa o buffer recebido do multer com sharp (redimensiona/otimiza)
+ * e envia o resultado pro Cloudinary, em vez de salvar em disco local.
+ * Isso resolve o problema do Render apagar uploads a cada deploy/restart.
+ *
+ * @param {Buffer} buffer - conteúdo do arquivo (req.file.buffer)
+ * @param {string} pastaDestino - pasta no Cloudinary (ex: 'avatars', 'produtos')
+ * @param {{ largura?: number, qualidade?: number }} opcoes
+ * @returns {Promise<string>} URL pública da imagem no Cloudinary
+ */
 async function salvarImagemProcessada(buffer, pastaDestino, opcoes = {}) {
   const { largura = 800, qualidade = 80 } = opcoes;
 
-  const nomeBase = crypto.randomBytes(16).toString('hex');
-  const arquivoWebp = `${nomeBase}.webp`;
-  const arquivoJpg = `${nomeBase}.jpg`;
-
-  const caminhoPasta = path.join(__dirname, '..', 'uploads', pastaDestino);
-  fs.mkdirSync(caminhoPasta, { recursive: true });
-
-  const caminhoWebp = path.join(caminhoPasta, arquivoWebp);
-  const caminhoJpg = path.join(caminhoPasta, arquivoJpg);
-
-  // Salva WebP (principal)
-  await sharp(buffer)
+  // Sharp continua fazendo o mesmo trabalho de antes: redimensiona e
+  // recomprime pra WebP, otimizando o tamanho do arquivo.
+  const bufferProcessado = await sharp(buffer)
     .resize({ width: largura, withoutEnlargement: true })
     .webp({ quality: qualidade })
-    .toFile(caminhoWebp);
+    .toBuffer();
 
-  // Salva também uma versão JPEG como fallback para navegadores que não suportam WebP.
-  // Mantemos qualidade um pouco maior para compensar perda em JPEG.
-  await sharp(buffer)
-    .resize({ width: largura, withoutEnlargement: true })
-    .jpeg({ quality: Math.min(90, qualidade + 10) })
-    .toFile(caminhoJpg);
+  // Envia o buffer processado direto pro Cloudinary via stream,
+  // sem nunca tocar o disco local do servidor.
+  const resultado = await new Promise((resolve, reject) => {
+    const streamUpload = cloudinary.uploader.upload_stream(
+      {
+        folder: `marins-distribuidora/${pastaDestino}`,
+        format: 'webp',
+        public_id: crypto.randomBytes(16).toString('hex'),
+      },
+      (erro, resultado) => {
+        if (erro) return reject(erro);
+        resolve(resultado);
+      }
+    );
+    streamUpload.end(bufferProcessado);
+  });
 
-  // Por compatibilidade com o restante do código, retornamos a URL WebP (o existente).
-  // As views podem derivar o fallback trocando a extensão para .jpg quando necessário.
-  return `/uploads/${pastaDestino}/${arquivoWebp}`;
+  // O Cloudinary já retorna uma URL pública permanente e otimizada (CDN).
+  return resultado.secure_url;
 }
 
 /**

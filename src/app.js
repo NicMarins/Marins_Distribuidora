@@ -52,7 +52,7 @@ app.use(
         scriptSrcAttr: ["'none'"],
         styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        imgSrc: ["'self'", 'data:'],
+        imgSrc: ["'self'", 'data:', 'https://res.cloudinary.com'],
         connectSrc: ["'self'"],
         objectSrc: ["'none'"],
         frameAncestors: ["'self'"],
