@@ -1,7 +1,5 @@
 # DescarteCerto — Loja de Produtos Descartáveis
 
-Teste de deploy que meu amigo nicolas pediu para fazer no readme, isso sera apagado depois
-
 Plataforma web para venda de produtos descartáveis (embalagens, festas,
 higiene e uso único).
 
