@@ -105,7 +105,7 @@ async function buscarPorId(id) {
   return rows[0] ? mapearProduto(rows[0]) : null;
 }
 
-async function listarDestaques(limite = 4) {
+async function listarDestaques(limite = 10) {
   const { rows } = await pool.query(
     `${SELECT_BASE} WHERE p.featured = true ORDER BY p.created_at DESC LIMIT $1`,
     [limite]

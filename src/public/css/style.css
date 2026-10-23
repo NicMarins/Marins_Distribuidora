@@ -118,7 +118,7 @@ textarea:focus-visible {
 }
 
 .marca__selo {
-  background-color: rgba(254, 254, 254, 0.864);
+  background-color: #f8f1e3;
   color: var(--cor-tinta);
   font-family: 'playfair display', 'Times New Roman', serif;
   font-size: 1.2rem;
@@ -863,6 +863,20 @@ textarea:focus-visible {
     display: none;
   }
 
+  .barra-busca {
+    flex-direction: column;
+  }
+
+  .barra-busca input[type="search"],
+  .barra-busca .botao {
+    width: 100%;
+  }
+
+  .cartao-perfurado::before,
+  .cartao-perfurado::after {
+    display: none;
+  }
+
   .botao-menu-mobile {
     display: inline-block;
   }
@@ -873,8 +887,8 @@ textarea:focus-visible {
     gap: 0;
     position: absolute;
     top: 100%;
-    left: 0;
-    right: 0;
+    left: 2;
+    right: 2rem;
     background-color: var(--cor-fundo);
     border-bottom: 2px solid var(--cor-tinta);
     padding: 1rem 1.5rem;
@@ -896,7 +910,7 @@ textarea:focus-visible {
   .layout-catalogo,
   .layout-produto,
   .layout-perfil {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1cm;
   }
 
   .filtros-catalogo,
@@ -908,5 +922,20 @@ textarea:focus-visible {
 
   .galeria-produto__principal {
     aspect-ratio: 4 / 3;
+  }
+
+
+  .barra-busca {
+    flex-direction: column;
+  }
+
+  .barra-busca input[type="search"],
+  .barra-busca .botao {
+    width: 90%;
+  }
+
+  .cartao-perfurado::before,
+  .cartao-perfurado::after {
+    display: none;
   }
 }

@@ -3,27 +3,15 @@
 Plataforma web para venda de produtos descartáveis (embalagens, festas,
 higiene e uso único).
 
-> **Status:** Etapa 2 concluída (Estrutura Inicial). Documentação completa
-> de instalação, deploy e uso será finalizada na Etapa 10.
-
 ## Stack
 
 - **Frontend:** HTML5, CSS3, JavaScript (ES6+), templates EJS
 - **Backend:** Node.js + Express
 - **Banco de dados:** PostgreSQL
 - **Autenticação:** JWT + bcrypt
-- **Upload de imagens:** Multer + Sharp
+- **Upload de imagens:** cloudinary
 
 ## Como rodar (desenvolvimento)
-
-```bash
-npm install
-cp .env.example .env
-# edite o .env com suas credenciais de banco de dados
-psql $DATABASE_URL -f src/database/schema.sql
-psql $DATABASE_URL -f src/database/seed.sql   # opcional: popula com produtos de exemplo
-npm run dev
-```
 
 Após subir o servidor, crie um usuário administrador promovendo manualmente
 um cadastro feito por `/cadastro`:
