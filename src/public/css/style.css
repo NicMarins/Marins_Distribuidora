@@ -928,15 +928,6 @@ textarea:focus-visible {
     aspect-ratio: 4 / 3;
   }
 
-  .cartao-produto__imagem {
-    aspect-ratio: 4 / 3;
-    padding: 0.75rem;
-  }
-
-  .cartao-produto__imagem img {
-    object-fit: contain;
-  }
-
   .barra-busca {
     flex-direction: column;
   }
