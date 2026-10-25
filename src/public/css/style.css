@@ -910,7 +910,11 @@ textarea:focus-visible {
   .layout-catalogo,
   .layout-produto,
   .layout-perfil {
-    grid-template-columns: 1cm;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .layout-produto {
+    gap: 1.5rem;
   }
 
   .filtros-catalogo,
